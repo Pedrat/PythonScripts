@@ -3,16 +3,13 @@ import threading
 from time import sleep
 from termcolor import colored,cprint
 
-
 listaform=[]
-
 valida=0
 contagem=0
 def read():
     del listaform[:]
     for x in open("nomesprocurar.txt",'r'):
         listaform.append(x.replace('\n',''))
-
 
 for x in os.popen("ls"):
     if "IDs.txt" in x:
@@ -25,14 +22,12 @@ if valida == 0:
 else:
     print("File ja existe!")
 
-
 def save(nome,num):
     if nome == "a Furtado Duarte":
         nome = "Graça Duarte"
     file=open("IDs.txt",'a')
     file.write(nome+' com o id de: '+num+'\n')
     file.close()
-
 
 def thread(num,num2):
     for num in range(num,(num2+1)):
@@ -42,11 +37,9 @@ def thread(num,num2):
             page = requests.get(url)
             page=str(page.content)
             print(num)
-            #print(listaform,"LISTA")
             if "como Formador" in page:
                 for x in listaform:
                     if x in page:
-                        #print(x,"X")
                         cprint(x+" "+num,"red")
                         save(x,num)
                         num=int(num)
@@ -54,6 +47,7 @@ def thread(num,num2):
                 continue
             sys.exit(1)
         except:
+            num=int(num)
             num-=1
             continue
 

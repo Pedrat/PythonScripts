@@ -10,19 +10,16 @@ class threads:
         self.threads=[]
 
     def inicia(self,x,y):
-        #print("AQUI2")
         self.threads.append(th(target=ch.thread,args=(x,y)))
 
     def start(self):
-        #print("AQUI")
         for x in self.threads:
             x.daemon=True
             x.start()
     def startthread(self):
         i=0
-        #print("AQUI#")
         ch.read()
-        for x in range(5900,8001):
+        for x in range(6500,7700):
             i+=1
             if i==100:
                 self.inicia(x,(x+100))
@@ -32,9 +29,7 @@ class threads:
         self.start()
 
 while 1:
-    thr=threads()
-    #cprint("sad ","red")
-    #os.system("clear")
+    thr=threads())
     cprint("Menu\n1-Adicionar pessoas para a pesquisa do ID\n2-Procurar","cyan")
     opc=input("")
     if opc == "1":
