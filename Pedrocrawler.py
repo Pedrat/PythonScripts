@@ -14,7 +14,7 @@ class threads:
 
     def start(self):
         for x in self.threads:
-            x.daemon=True
+            x.daemon = True
             x.start()
 
     def startthread(self):

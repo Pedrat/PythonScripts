@@ -11,6 +11,7 @@ def read():
     for x in open("nomesprocurar.txt",'r'):
         listaform.append(x.replace('\n',''))
 
+
 for x in os.popen("ls"):
     if "IDs.txt" in x:
         valida = 1
@@ -29,27 +30,56 @@ def save(nome,num):
     file.write(nome+' com o id de: '+num+'\n')
     file.close()
 
+def Corrige(word):
+    if "\\xc3\\xa1" in word: word=word.replace("\\xc3\\xa1","á")
+    if "\\xc3\\xa2" in word: word=word.replace("\\xc3\\xa2","â")
+    if "\\xc3\\xa3" in word: word=word.replace("\\xc3\\xa3","ã")
+    if "\\xc3\\x82" in word: word=word.replace("\\xc3\\x82","Â")
+    if "\\xc3\\x81" in word: word=word.replace("\\xc3\\x81","Á")
+    if "\\xc3\\xa4" in word: word=word.replace("\\xc3\\xa4","ä")
+    if "\\xc3\\xa9" in word: word=word.replace("\\xc3\\xa9","é")
+    if "\\xc3\\xaa" in word: word=word.replace("\\xc3\\xaa","ê")
+    if "\\xc3\\x89" in word: word=word.replace("\\xc3\\x89","É")
+    if "\\xc3\\xad" in word: word=word.replace("\\xc3\\xad","í")
+    if "\\xc3\\xb4" in word: word=word.replace("\\xc3\\xb4","ô")
+    if "\\xc3\\xb3" in word: word=word.replace("\\xc3\\xb3","ó")
+    if "\\xc3\\xb5" in word: word=word.replace("\\xc3\\xb5","õ")
+    if "\\xc3\\x93" in word: word=word.replace("\\xc3\\x93","Ó")
+    if "\\xc3\\xba" in word: word=word.replace("\\xc3\\xba","ú")
+    if "\\xc3\\xa7" in word: word=word.replace("\\xc3\\xa7","ç")
+    if "\\xc3\\xb1" in word: word=word.replace("\\xc3\\xb1","ñ")
+    return word
+
+
 def thread(num,num2):
     for num in range(num,(num2+1)):
-        try:
+        if 1==1:
+        #try:
             num=str(num)
             url = "http://trainingserver.atec.pt/TrainingServer/Mulberry/JSON/Controls/Calendar/getCalendarDataSource.ashx?command=_SelectAllSchedulesDataSetGivenByUserId&oId="+num+"&idField=DataValueField&titleField=DataTextField&startDateField=DataStartField&endDateField=DataEndField&backgroundColorField=&textColorField=textcolor&eventColorField=color&description=description&picField=pic&urlField=url&start=1520208000&end=1520812800&_=1520509039082"
             page = requests.get(url)
             page=str(page.content)
             #print(num)
             if "como Formador" in page:
-                for x in listaform:
-                    if x in page:
-                        cprint(x+" "+num,"red")
-                        save(x,num)
-                        num=int(num)
+                #cprint("BOM DIA! ",'red')
+                page = page[page.rfind("Formador"):]
+                #cprint("CARALHO",'red')
+                page = page.split("\\\\")
+                #cprint("DEI SPLIT",'red')
+                page = page[4][5:]
+                page = Corrige(page)
+                cprint("Encontrei o "+page+' com o id de '+num,'red')
+                f = open("Formadores.txt","a")
+                f.write(str(num) + " -" + str(page) + "\n")
+                f.close()
+
             else:
                 continue
 
-        except:
-            num=int(num)
-            num-=1
-            continue
+        #except:
+        #    num=int(num)
+        #    num-=1
+        #    continue
         sys.exit(1)
 
 def calendar(num,date):
