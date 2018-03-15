@@ -1,18 +1,30 @@
 import requests,pyquery,spyder,scrapy,os
 from bs4 import BeautifulSoup
 from termcolor import cprint,colored
+from threading import Thread as th
 
 listadork=[]
+listadork2=[]
 listadorksvalidos=[]
 
 class HANDLER:
 
     def read():
+        tamanho=0
+        i=0
         for x in open("dorks.txt",'r'):
-            listadork.append("/"+x.replace('\n',''))
+		          tamanho+=1
+        for x in open("dorks.txt",'r'):
+            if i<=(tamanho//2):
+                listadork.append("/"+x.replace('\n',''))
+                i+=1
+            else:
+                listadork2.append('/'+x.replace('\n',''))
+                i+=1
+
     read()
-    def crawler(url):
-        for x in listadork:
+    def crawler(url,lista):
+        for x in lista:
             try:
                 url2 = url + x + "1'"
                 page= requests.get(url2)
