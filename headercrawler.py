@@ -6,7 +6,8 @@ from threading import Thread as th
 listadork=[]
 listadork2=[]
 listadorksvalidos=[]
-
+listadorks=[listadork,listadork2]
+valida=1
 class HANDLER:
 
     def read():
@@ -24,24 +25,29 @@ class HANDLER:
 
     read()
     def crawler(url,lista):
+
         for x in lista:
-            try:
-                url2 = url + x + "1'"
-                page= requests.get(url2)
-                contents=page.text
-                print(url2)
-                if 'deprecated' in contents  :
-                    listadorksvalidos.append(x)
-                    cprint("vulnerabilidade encontrada!",'red')
-                elif 'You have an error in your SQL syntax' in contents:
-                    listadorksvalidos.append(x)
-                    cprint("vulnerabilidade encontrada!",'red')
-                elif 'Query fail' in contents:
-                    listadorksvalidos.append(x)
-                    cprint("vulnerabilidade encontrada!",'red')
-            except:
-                    cprint("Ocorreu um erro (Time out talvez?)",'red')
-                    continue
+            if valida == 1:
+                #try:
+                if 1==1:
+                    url2 = url + x + "1'"
+                    page= requests.get(url2)
+                    contents=page.text
+                    print(url2)
+                    if 'deprecated' in contents  :
+                        listadorksvalidos.append(x)
+                        cprint("vulnerabilidade encontrada!",'red')
+                    elif 'You have an error in your SQL syntax' in contents:
+                        listadorksvalidos.append(x)
+                        cprint("vulnerabilidade encontrada!",'red')
+                    elif 'Query fail' in contents:
+                        listadorksvalidos.append(x)
+                        cprint("vulnerabilidade encontrada!",'red')
+            #    except:
+                    #    cprint("Ocorreu um erro (Time out talvez?)",'red')
+                    #    continue
+            else:
+                sys.exit(1)
     def pelica(url):
         if 'https' not in url:
             if 'http' not in url:
